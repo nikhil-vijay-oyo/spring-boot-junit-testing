@@ -4,13 +4,15 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    public Employee getEmployeeById(Long id);
+    Employee getEmployeeById(Long id);
 
-    public Employee getEmployeeByName(String name);
+    Employee getEmployeeByName(String name);
 
-    public List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees();
 
-    public boolean exists(String email);
+    boolean exists(String email);
 
-    public Employee save(Employee employee);
+    Employee save(Employee employee);
+
+    List<String> getProjectForEmployee(Integer id);
 }

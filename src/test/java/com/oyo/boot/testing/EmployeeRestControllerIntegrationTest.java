@@ -1,19 +1,6 @@
 package com.oyo.boot.testing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.io.IOException;
-import java.util.List;
-
+import com.oyo.boot.Application;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,13 +15,24 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.oyo.boot.Application;
+import java.io.IOException;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
-@AutoConfigureMockMvc 
-@EnableAutoConfiguration(exclude=SecurityAutoConfiguration.class)
-// @TestPropertySource(locations = "classpath:application-integrationtest.properties")
+@AutoConfigureMockMvc
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @AutoConfigureTestDatabase
 public class EmployeeRestControllerIntegrationTest {
 
@@ -50,7 +48,7 @@ public class EmployeeRestControllerIntegrationTest {
     }
 
     @Test
-    public void whenValidInput_thenCreateEmployee() throws IOException, Exception {
+    public void testWhenValidInputThenCreateEmployee() throws IOException, Exception {
         Employee bob = new Employee("bob");
         mvc.perform(post("/api/employees").contentType(MediaType.APPLICATION_JSON).content(JsonUtil.toJson(bob)));
 
@@ -59,22 +57,31 @@ public class EmployeeRestControllerIntegrationTest {
     }
 
     @Test
-    public void givenEmployees_whenGetEmployees_thenStatus200() throws Exception {
+    public void testGivenEmployeesReturnStatus200() throws Exception {
         createTestEmployee("bob");
         createTestEmployee("alex");
 
         // @formatter:off
         mvc.perform(get("/api/employees").contentType(MediaType.APPLICATION_JSON))
-          .andDo(print())
-          .andExpect(status().isOk())
-          .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-          .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
-          .andExpect(jsonPath("$[0].name", is("bob")))
-          .andExpect(jsonPath("$[1].name", is("alex")));
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
+                .andExpect(jsonPath("$[0].name", is("bob")))
+                .andExpect(jsonPath("$[1].name", is("alex")));
         // @formatter:on
     }
 
-    //
+    @Test
+    public void testGetProjectWhenValidIdThenReturnsStatus200() throws Exception {
+        mvc.perform(get("/api/employee/1/project").contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))))
+                .andExpect(jsonPath("$[0]", is("Hack World")))
+                .andExpect(jsonPath("$[1]", is("Down Under")));
+    }
 
     private void createTestEmployee(String name) {
         Employee emp = new Employee(name);
