@@ -1,15 +1,20 @@
 package com.oyo.boot.testing;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "person")
+@Builder
+@AllArgsConstructor
 public class Employee {
 
     public Employee() {
@@ -26,7 +31,7 @@ public class Employee {
     @Size(min = 3, max = 20)
     private String name;
 
-    private Date birthday;
+    private LocalDate birthday;
 
     public Long getId() {
         return id;
