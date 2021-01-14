@@ -4,46 +4,84 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+<!--    <parent>-->
+        <groupId>com.oyo.spring-boot-modules</groupId>
+<!--        <artifactId>spring-boot-modules</artifactId>-->
+        <version>1.0.0-SNAPSHOT</version>
+<!--        <relativePath>../</relativePath>-->
+<!--    </parent>-->
+
     <artifactId>spring-boot-testing</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>spring-boot-testing</name>
     <description>This is simple boot application for demonstrating testing features.</description>
-
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- The main class to start by executing java -jar -->
+        <start-class>com.oyo.boot.Application</start-class>
+        <git-commit-id-plugin.version>2.2.4</git-commit-id-plugin.version>
+        <spock.version>1.2-groovy-2.4</spock.version>
+        <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
+        <redis.version>0.7.2</redis.version>
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <junit.platform.version>1.5.2</junit.platform.version>
+        <rest-assured.version>3.3.0</rest-assured.version>
+        <!-- plugins -->
+        <thin.version>1.0.22.RELEASE</thin.version>
+        <spring-boot.version>2.4.0</spring-boot.version>
+        <aspectjweaver.version>1.9.1</aspectjweaver.version>
+        <!-- this property can be removed once we update Mockito version in the main pom.xml -->
+        <mockito.version>3.4.0</mockito.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <version>1.4.200</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <version>2.3.4.RELEASE</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
         <!-- Embedded Redis Server -->
         <dependency>
@@ -70,6 +108,25 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -132,13 +189,5 @@
         </plugins>
     </build>
 
-    <properties>
-        <!-- The main class to start by executing java -jar -->
-        <start-class>com.oyo.boot.Application</start-class>
-        <git-commit-id-plugin.version>2.2.4</git-commit-id-plugin.version>
-        <spock.version>1.2-groovy-2.4</spock.version>
-        <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
-        <redis.version>0.7.2</redis.version>
-    </properties>
 
 </project>
